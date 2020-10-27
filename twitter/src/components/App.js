@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import AppRouter from "components/Router"
-import fbase from "../myBase";
+import {authService} from "../myBase";
 
 function App() {
-  const [isLoggendIn, setIsLoggendIn] = useState(false);
+  const [isLoggendIn, setIsLoggendIn] = useState(authService.currentUser);
   return (
     <>
       <AppRouter isLoggedIn={isLoggendIn} />

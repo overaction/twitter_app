@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
-import firebase from "./myBase";
 
-console.log(firebase);
 ReactDOM.render(
   <React.StrictMode>
     <App />
