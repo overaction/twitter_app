@@ -15,6 +15,7 @@ function App() {
       }
       else {
         setIsLoggedIn(false);
+        setUserObj(null);
       }
       setInit(true);
     })
@@ -22,8 +23,8 @@ function App() {
 
   return (
     <>
+      {console.log('updated')}
       {init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} /> : "Initializing..."}
-      <footer>&copy; {new Date().getFullYear()} Twitter</footer>
     </>
   );
 }
