@@ -30,7 +30,7 @@ const Home = ({ userObj }) => {
     const newTweet = {
       text: tweet,
       createdAt: Date.now(),
-      createrId: userObj.uid,
+      creatorId: userObj.uid,
       fileUrl,
     }
     await dbService.collection('tweets').add(newTweet)
