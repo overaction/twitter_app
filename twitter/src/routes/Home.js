@@ -21,15 +21,21 @@ const Home = ({ userObj }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`)
-    const response = await fileRef.putString(file, "data_url")
-    console.log(response);
-    /* await dbService.collection('tweets').add({
+    let fileUrl = "";
+    if(file !== "") {
+      const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`)
+      const response = await fileRef.putString(file, "data_url")
+      fileUrl = await response.ref.getDownloadURL();
+    }
+    const newTweet = {
       text: tweet,
       createdAt: Date.now(),
       createrId: userObj.uid,
-    });
-    setTweet(''); */
+      fileUrl,
+    }
+    await dbService.collection('tweets').add(newTweet)
+    setTweet('');
+    setFile('');
   };
   const onChange = (e) => {
     const {
@@ -43,7 +49,9 @@ const Home = ({ userObj }) => {
     } = e;
     const theFile = files[0];
     const reader = new FileReader();
-    reader.readAsDataURL(theFile);
+    if(theFile) {
+      reader.readAsDataURL(theFile);
+    }
     reader.onload = (e) => {
       console.log(e);
       const {
