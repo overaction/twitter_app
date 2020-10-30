@@ -1,5 +1,6 @@
 import Tweet from 'components/Tweet';
-import { dbService } from 'myBase';
+import { v4 as uuidv4 } from 'uuid'
+import { dbService, storageService } from 'myBase';
 import React, { useEffect, useState } from 'react';
 
 const Home = ({ userObj }) => {
@@ -20,12 +21,15 @@ const Home = ({ userObj }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await dbService.collection('tweets').add({
+    const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`)
+    const response = await fileRef.putString(file, "data_url")
+    console.log(response);
+    /* await dbService.collection('tweets').add({
       text: tweet,
       createdAt: Date.now(),
       createrId: userObj.uid,
     });
-    setTweet('');
+    setTweet(''); */
   };
   const onChange = (e) => {
     const {
@@ -49,6 +53,7 @@ const Home = ({ userObj }) => {
     };
   };
   const onClearFile = () => setFile(null);
+
   return (
     <div>
       <form onSubmit={onSubmit}>
