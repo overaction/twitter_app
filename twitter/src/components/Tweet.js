@@ -1,4 +1,4 @@
-import { dbService } from 'myBase';
+import { dbService, storageService } from 'myBase';
 import React, { useState } from 'react';
 
 const Tweet = ({ tweetObj, isOwner }) => {
@@ -9,6 +9,7 @@ const Tweet = ({ tweetObj, isOwner }) => {
     const ok = window.confirm('Are you sure you want to delete this tweet?');
     if (ok) {
       await dbService.doc(`tweets/${tweetObj.id}`).delete();
+      await storageService.refFromURL(tweetObj.fileUrl).delete();
     }
   };
   const toggleEditing = () => setEditing((prev) => !prev);
