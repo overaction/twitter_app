@@ -41,7 +41,7 @@ const Tweet = ({ tweetObj, isOwner }) => {
         <>
           <h4>{tweetObj.text}</h4>
           {tweetObj.fileUrl && (
-            <img src={tweetObj.fileUrl} width="50px" height="50px"/>
+            <img src={tweetObj.fileUrl} alt="img" width="50px" height="50px"/>
           )}
           {isOwner && (
             <>

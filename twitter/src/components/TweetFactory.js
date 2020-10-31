@@ -61,7 +61,7 @@ const TweetFactory = ({userObj}) => {
       <input type="submit" value="Twitt" />
       {file && (
         <div>
-          <img src={file} width="50px" height="50px" />
+          <img src={file} alt="img" width="50px" height="50px" />
           <button onClick={onClearFile}>Clear</button>
         </div>
       )}

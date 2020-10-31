@@ -1,5 +1,5 @@
 import { authService, dbService } from 'myBase';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 const Profile = ({ userObj, refreshUser }) => {
@@ -9,17 +9,17 @@ const Profile = ({ userObj, refreshUser }) => {
     authService.signOut();
     history.push('/');
   };
-  const getMyTweets = async () => {
+  const getMyTweets = useCallback(async () => {
     const tweets = await dbService
       .collection('tweets')
       .where('creatorId', '==', userObj.uid)
       .orderBy('createdAt', 'desc')
       .get();
     console.log(tweets.docs.map((doc) => doc.data()));
-  };
+  },[userObj.uid]);
   useEffect(() => {
     getMyTweets();
-  }, []);
+  }, [getMyTweets]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
