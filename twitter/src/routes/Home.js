@@ -14,6 +14,7 @@ const Home = ({ userObj }) => {
       setTweets(tweetArray);
       console.log('snapshot');
     });
+    return () => setTweets(false);
   }, []);
 
   return (
