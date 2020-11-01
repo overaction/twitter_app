@@ -50,7 +50,7 @@ const Tweet = ({ tweetObj, isOwner }) => {
             <img src={tweetObj.attachmentUrl} alt="img" />
           )}
           {isOwner && (
-            <div class="tweet__actions">
+            <div className="tweet__actions">
               <span onClick={onDeleteClick}>
                 <FontAwesomeIcon icon={faTrash} />
               </span>
