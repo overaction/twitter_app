@@ -1,5 +1,7 @@
 import { dbService, storageService } from 'myBase';
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Tweet = ({ tweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -15,39 +17,47 @@ const Tweet = ({ tweetObj, isOwner }) => {
   const toggleEditing = () => setEditing((prev) => !prev);
   const onSubmit = async (e) => {
     e.preventDefault();
-    await dbService.doc(`tweets/${tweetObj.id}`).update({text: newTweet});
+    await dbService.doc(`tweets/${tweetObj.id}`).update({ text: newTweet });
     setEditing(false);
   };
   const onTweetChange = (e) => {
     setNewTweet(e.target.value);
   };
   return (
-    <div>
+    <div className="tweet">
       {editing ? (
         <>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="container tweetEdit">
             <input
-              onChange={onTweetChange}
               type="text"
-              placeholder="what is your tweet"
+              placeholder="Edit your tweet"
               value={newTweet}
               required
+              autoFocus
+              onChange={onTweetChange}
+              className="formInput"
             />
-            <input type="submit" value="Update Tweet" />
+            <input type="submit" value="Update tweet" className="formBtn" />
           </form>
-          <button onClick={toggleEditing}>Cancel</button>
+          <span onClick={toggleEditing} className="formBtn cancelBtn">
+            Cancel
+          </span>
         </>
       ) : (
         <>
           <h4>{tweetObj.text}</h4>
-          {tweetObj.fileUrl && (
-            <img src={tweetObj.fileUrl} alt="img" width="50px" height="50px"/>
+          {tweetObj.attachmentUrl && (
+            <img src={tweetObj.attachmentUrl} alt="img" />
           )}
           {isOwner && (
-            <>
-              <button onClick={onDeleteClick}>Delete Tweet</button>
-              <button onClick={toggleEditing}>Edit Tweet</button>
-            </>
+            <div class="tweet__actions">
+              <span onClick={onDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+              <span onClick={toggleEditing}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
+            </div>
           )}
         </>
       )}
