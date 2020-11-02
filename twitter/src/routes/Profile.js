@@ -10,13 +10,13 @@ const Profile = ({ userObj, refreshUser }) => {
     history.push('/');
   };
   const getMyTweets = useCallback(async () => {
-    const tweets = await dbService
+      await dbService
       .collection('tweets')
       .where('creatorId', '==', userObj.uid)
       .orderBy('createdAt', 'desc')
       .get();
-    console.log(tweets.docs.map((doc) => doc.data()));
   },[userObj.uid]);
+
   useEffect(() => {
     getMyTweets();
   }, [getMyTweets]);

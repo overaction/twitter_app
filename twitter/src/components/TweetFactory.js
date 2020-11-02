@@ -4,15 +4,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
+let reader = new FileReader();
 const TweetFactory = ({ userObj }) => {
   const [tweet, setTweet] = useState('');
   const [file, setFile] = useState('');
-  const reader = new FileReader();
 
   const onSubmit = async (e) => {
-    if (tweet === '') return;
-
     e.preventDefault();
+    if (tweet === '') return;
     let fileUrl = '';
     if (file !== '') {
       const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
@@ -29,18 +28,19 @@ const TweetFactory = ({ userObj }) => {
     setTweet('');
     setFile('');
   };
+
   const onChange = (e) => {
     const {
       target: { value },
     } = e;
     setTweet(value);
   };
+
   const onFileChange = (e) => {
     const {
       target: { files },
     } = e;
     const theFile = files[0];
-    console.log(theFile);
     if (theFile) {
       reader.readAsDataURL(theFile);
     }
@@ -50,9 +50,12 @@ const TweetFactory = ({ userObj }) => {
       } = e;
       setFile(result);
     };
+    e.target.value = '';
   };
-  const onClearFile = () => setFile('');
 
+  const onClearFile = () => {
+    setFile('');
+  }
   return (
     <form onSubmit={onSubmit} className="factoryForm">
       <div className="factoryInput__container">
@@ -81,13 +84,7 @@ const TweetFactory = ({ userObj }) => {
       />
       {file && (
         <div className="factoryForm__attachment">
-          <img
-            src={file}
-            alt="img"
-            style={{
-              backgroundImage: file,
-            }}
-          />
+          <img src={file} alt="img"/>
           <div className="factoryForm__clear" onClick={onClearFile}>
             <span>Remove</span>
             <FontAwesomeIcon icon={faTimes} />
