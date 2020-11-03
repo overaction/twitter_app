@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 let reader = new FileReader();
 
-const Tweet = ({ tweetObj, userObj, isOwner }) => {
+const Tweet = ({ tweetObj, userObj, isOwner, profile }) => {
   const [editing, setEditing] = useState(false);
   const [newTweet, setNewTweet] = useState(tweetObj.text);
   const [fileUrl, setFileUrl] = useState(tweetObj.fileUrl);

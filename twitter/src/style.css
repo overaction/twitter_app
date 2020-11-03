@@ -94,6 +94,16 @@ form {
   flex-direction: column;
 }
 
+.profileTweets {
+  margin-top: 20px;
+}
+
+.myTweets {
+  margin-top: 10px;
+  background-color: rgb(255, 0, 200);
+  border-radius: 4px;
+}
+
 .logOut {
   margin-top: 50px;
 }

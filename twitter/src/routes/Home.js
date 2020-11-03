@@ -23,7 +23,6 @@ const Home = ({ userObj }) => {
 
   return (
     <div className="container">
-      {console.log(tweets)}
       <TweetFactory userObj={userObj} />
       <div style={{ marginTop: 30 }}>
         {tweets.map((tweet) => (
